@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert Employee</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<form>
+    id:<input type="hidden" name="id" id="id"><br><br>
+    name:<input type="text" name="name" id="name"><br><br>
+    address1:<input type="text" name="address1" id="address1"><br><br>
+    address:<input type="text" name="address" id="address"><br><br>
+    city:<input type="text" name="city" id="city"><br><br>
+    zipcode:<input type="number" name="zipcode" id="zipcode"><br><br>
+    <input type="button" value="insert" onclick="insert()">
+</form>
+<form action="listemployee.html">
+    <input type="submit" value="list">
+</form>
+
+<script>
+    function insert() {
+        var id=$('#id').val();
+        var name = $('#name').val();
+        var address1 = $('#address1').val();
+        var address = $('#address').val();
+        var city = $('#city').val();
+        var zipcode = $('#zipcode').val();
+
+        var EmployeeData = {
+            id:id,
+            name: name,
+            address1: address1,
+            address: address,
+            city: city,
+            zipcode: zipcode
+        };
+
+        $.ajax({
+            url: 'http://localhost:8080/Employee/addemployee',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(EmployeeData),
+            success: function() {
+                window.location.href = 'listemployee.html';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

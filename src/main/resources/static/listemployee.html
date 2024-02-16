@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<table border="2px">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>address1</th>
+        <th>address</th>
+        <th>city</th>
+        <th>zipcode</th>
+    </tr>
+    <tbody id="body">
+
+    </tbody>
+</table>
+<script>
+    $(document).ready(function (){
+        getall();
+    })
+    function getall(){
+        $.ajax({
+            url:'http://localhost:8080/Employee/getallemployee',
+            type:'GET',
+            success:function (employe){
+                var tablebody=$('#body')
+                tablebody.empty()
+                employe.forEach(function (emp){
+                    var row='<tr>'+
+                        '<td>'+emp.id+'</td>'+
+                        '<td>'+emp.name+'</td>'+
+                        '<td>'+emp.address1+'</td>'+
+                        '<td>'+emp.address+'</td>'+
+                        '<td>'+emp.city+'</td>'+
+                        '<td>'+emp.zipcode+'</td>'+
+                        '<td>' +
+                        '<button onclick="updateemploye('+emp.id+')">update</button>'+
+                        '<button onclick="deleteemploye('+emp.id+')">delete</button>'+
+                        '</td>'
+                    tablebody.append(row)
+                })
+            }
+        })
+    }
+function deleteemploye(id){
+        $.ajax({
+            url:'http://localhost:8080/Employee/deleteemployee/'+id,
+            type:'DELETE',
+            success:function (){
+                getall();
+            }
+        })
+}
+function updateemploye(id) {
+localStorage.setItem("id",id)
+    window.location.href='updateemploye.html'
+}
+</script>
+</body>
+</html>
